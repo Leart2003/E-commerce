@@ -1,0 +1,128 @@
+﻿@model Punim_Diplome.Models.ProductVM
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<!DOCTYPE html>
+
+
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>Shop Homepage - Start Bootstrap Template</title>
+    <!-- Favicon-->
+    <!-- Bootstrap icons-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link href="~/css/styles.css" rel="stylesheet">
+</head>
+
+<!-- Header-->
+<header class="bg-dark py-5">
+    <div class="container px-4 px-lg-5 my-5">
+        <div class="text-center text-white">
+            <h1 class="display-4 fw-bolder">Shop in style</h1>
+            <p class="lead fw-normal text-white-50 mb-0">With this shop hompeage template</p>
+        </div>
+    </div>
+
+    @*Search String*@
+    <div class="d-flex justify-content-center align-items-center ">
+        <form asp-controller="Produkt" asp-action="Index" method="get" class="d-flex">
+            <input type="text"
+                   class="form-control" name="SearchString" id="SearchString" placeholder="Kërko" typeof="search" aria-describedby="basic-addon2">
+                 
+
+            <button class="btn btn-outline-secondary ms-2"
+                    type="submit" value="filter">
+                Kërko
+            </button>
+
+        </form>
+    </div> 
+    @* SelectByBrand *@
+    <form asp-action="Index" asp-controller="Produkt" method="get" class="d-flex">
+
+      
+
+        <label for="brandSelect">Filter by Brand:</label>
+        <div class="d-flex justify-content-center align-items-center">
+        <select class="form-select" aria-label="Default select example" id="brandSelect" name="brand" onchange="this.form.submit()">
+            <option value="">Selekto sipas Brendid</option>
+            @foreach (var brand in Model.AvailableBrands)
+            {
+                <option value="@brand">@brand</option>
+            }
+        </select>
+        </div>
+   
+    </form>
+
+    @*Filter by category*@
+    <form asp-action="Index" asp-controller="Produkt" method="get" class="d-flex">
+
+        <label for="categorySelect ">Filter by category:</label>
+        <div class="d-flex justify-content-center align-items-center">
+            <select class="form-control" aria-label="Default selct example" id="categorySelect" name="selectedCategory" onchange="this.form.submit()">
+                <option value="">Filtro sipas kategorisë </option>
+                    @foreach (var category in Model.AvailableCategories)
+                    {
+                       <option value="@category">@category</option>
+                    }
+               
+            </select>
+        </div>
+    </form>
+
+
+</header>
+
+
+
+<section class="py-4">
+    <div class="container px-4 px-lg-5 mt-5">
+        <!-- Bootstrap grid row -->
+        <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-lg-4 justify-content-center">
+            @foreach (var item in Model.Products )
+            {
+
+                <div class="col mb-5">
+                    <div class="card h-100">
+                        <!-- Product image-->
+                        <img class="card-img-top" src="~/Produktet/@item.ImageFileName" alt="@item.Name" />
+                        <!-- Product details-->
+                        <div class="card-body p-4">
+                            <div class="text-center">
+                                <!-- Product name-->
+                                <h5 class="fw-bolder">@item.Name</h5>
+                            </div>
+
+                            <p class="text-center">Price:@item.Price.ToString("C")</p>
+                            <p class="text-center">Ram:@item.Ram </p>
+                            
+                        </div>
+                        
+                        <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                            <div class="text-center">
+                                <a class="btn btn-outline-dark mt-auto" role="button" asp-action="Details" asp-controller="Produkt" asp-route-id="@item.Id">View options</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>
+
+
+
+
+
+
+
+
+
+

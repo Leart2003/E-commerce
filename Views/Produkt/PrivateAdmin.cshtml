@@ -1,0 +1,32 @@
+﻿@model IEnumerable<Microsoft.AspNetCore.Identity.IdentityUser>
+
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Email</th>
+            <th>Username</th>
+            <th>AccessFailedCount</th>
+            <th>PhoneNumber</th>
+            <th>Delete User</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model)
+        {
+            <tr>
+                <td>@user.Email</td>
+                <td>@user.UserName</td>
+                <td>@user.AccessFailedCount</td>
+                <td>@user.PhoneNumber</td>
+                <th>
+                    <a role="button" asp-action="Produkt" asp-action="DeleteUser" asp-route-id="@user.Id"></a>
+
+                </th>
+
+            </tr>
+        }
+    </tbody>
+</table>
