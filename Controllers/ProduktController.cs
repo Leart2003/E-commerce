@@ -11,8 +11,7 @@ using Punim_Diplome.Data.Services;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
-using DocumentFormat.OpenXml.Spreadsheet;
-using DocumentFormat.OpenXml.InkML;
+
 
 
 
