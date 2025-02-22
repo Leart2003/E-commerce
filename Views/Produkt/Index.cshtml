@@ -51,7 +51,7 @@
         <label for="brandSelect">Filter by Brand:</label>
         <div class="d-flex justify-content-center align-items-center">
         <select class="form-select" aria-label="Default select example" id="brandSelect" name="brand" onchange="this.form.submit()">
-            <option value="">Selekto sipas Brendid</option>
+            <option value="">Selekto sipas Brendid:   </option>
             @foreach (var brand in Model.AvailableBrands)
             {
                 <option value="@brand">@brand</option>
