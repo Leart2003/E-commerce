@@ -13,9 +13,8 @@ public class ApplicationDbContext : IdentityDbContext<IdentityUser>
 
     public DbSet<Koment> Comments { get; set; }
     public DbSet<Produkt> Produktet { get; set; }
+    public DbSet<OrderProduct> OrderProducts { get; set; }
    
-
-
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -29,16 +28,17 @@ public class ApplicationDbContext : IdentityDbContext<IdentityUser>
               .OnDelete(DeleteBehavior.Cascade);
 
 
+        modelBuilder.Entity<OrderProduct>()
+            .HasOne(o  => o.User)
+            .WithMany()
+            .HasForeignKey(o =>o.UserId)
+            .OnDelete(DeleteBehavior.Cascade);
 
-
-
-        
-
-
-
-
-
-
+        modelBuilder.Entity<OrderProduct>()
+            .HasOne(o => o.Produkt)
+            .WithMany()
+            .HasForeignKey(o => o.ProductId)
+            .OnDelete(DeleteBehavior.Cascade);
 
 
     }

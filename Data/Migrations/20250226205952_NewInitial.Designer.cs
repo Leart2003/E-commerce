@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Punim_Diplome.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250226205952_NewInitial")]
+    partial class NewInitial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -304,9 +307,6 @@ namespace Punim_Diplome.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("OrderProductId")
-                        .HasColumnType("int");
-
                     b.Property<decimal>("Price")
                         .HasPrecision(18, 2)
                         .HasColumnType("decimal(18,2)");
@@ -328,8 +328,6 @@ namespace Punim_Diplome.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("OrderProductId");
 
                     b.ToTable("Produktet");
                 });
@@ -420,18 +418,6 @@ namespace Punim_Diplome.Migrations
                     b.Navigation("Produkt");
 
                     b.Navigation("User");
-                });
-
-            modelBuilder.Entity("Punim_Diplome.Models.Produkt", b =>
-                {
-                    b.HasOne("Punim_Diplome.Models.OrderProduct", null)
-                        .WithMany("Produkts")
-                        .HasForeignKey("OrderProductId");
-                });
-
-            modelBuilder.Entity("Punim_Diplome.Models.OrderProduct", b =>
-                {
-                    b.Navigation("Produkts");
                 });
 
             modelBuilder.Entity("Punim_Diplome.Models.Produkt", b =>

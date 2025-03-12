@@ -1,0 +1,68 @@
+﻿@model IEnumerable< Punim_Diplome.Models.OrderProduct>
+
+<h2>Your Orders</h2>
+
+
+<table class="table">
+
+    <thead>
+        <tr>
+            
+            <th>Name</th>
+           
+            <th>Image</th>
+            <th>Created at</th>
+            
+        </tr>
+
+    </thead>
+    <tbody>
+        
+        
+            
+        
+            
+        
+
+        @foreach (var item in Model)
+        {
+            @* img src = "Produktet/@Produkt.ImageFileName" *@
+            <tr>
+                <td>@item.Produkt.Name</td>
+
+
+                <td>
+                    @item.Produkt.Price.ToString("C")
+                    
+                </td>
+                <td><img src="~/Produktet/@item.Produkt.ImageFileName" width="100" /> </td>
+
+                <td>
+                    @item.OrderDate
+                </td>
+
+
+
+                <td style=" white-space:nowrap">
+
+
+                    <a class="btn btn-danger btn-sm" asp-controller="Order" asp-action="CancelOrder" asp-route-id="@item.Id" role="button">
+                        Delete
+                    </a>
+
+                    <a asp-controller="Produkt" asp-action="Details" asp-route-id="@item.Id">
+                        Details
+
+
+                    </a> |
+
+
+
+                </td>
+            </tr>
+        }
+        
+                
+    </tbody>
+
+</table> 

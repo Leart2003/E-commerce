@@ -7,7 +7,7 @@
     <div class="row">
         <!-- Product Images -->
         <div class="col-md-6 mb-4">
-            <img src="~/Produktet/@Model.Produkt?.ImageFileName" alt="@Model.Produkt.Name" class="img-fluid rounded mb-3 product-image" id="mainImage">
+            <img src="~/Produktet/@Model.Produkt?.ImageFileName" alt="@Model.Produkt.Name" class="img-fluid rounded mb-3 product-image" id="mainImage" >
             
         </div>
 
@@ -40,14 +40,22 @@
             </div>
 
 
-            @* AddToWishList Form *@ @* asp-route-id="@Model.Produkt.Id" *@ 
-            <form asp-controller="WishList" asp-action="AddToWishList"   method="post">
-                @Html.AntiForgeryToken()
-                <input type="hidden" name="productId" value="@Model.Produkt.Id" />
-            <button class="btn btn-outline-secondary btn-lg mb-3" type="submit" >
-                <i class="bi bi-heart"></i> Add to Wishlist
-            </button>   
-            </form>
+            @* Porosia e produktit *@
+            @if (User.Identity.IsAuthenticated)
+            {
+                <form asp-controller="Order" asp-action="OrderNow" method="post">
+
+                    <input type="hidden" name="Id" value="@Model.Produkt.Id" />
+                    <button class="btn btn-outline-secondary btn-lg mb-3" type="submit">
+                        <i class="bi bi-heart">OrderNow</i>
+                    </button>
+                </form>
+            }
+            else 
+            {
+                <p>Login to order</p>
+            }
+           
 
             <div class="mt-4">
                 <h5>Key Features:</h5>
@@ -61,8 +69,10 @@
         </div>
     </div>
 </div>
+@* 
+Comments region *@
 
-
+<hr />
 @if (Model.Koments?.Any() == true)
 {
     <h3>Comments:</h3>
@@ -112,6 +122,3 @@ else
 
 
 
-
-
-<h3></h3>

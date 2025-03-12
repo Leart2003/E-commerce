@@ -1,5 +1,10 @@
 ﻿@model IEnumerable<Microsoft.AspNetCore.Identity.IdentityUser>
 
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+
 
 
 <table class="table">
@@ -7,9 +12,9 @@
         <tr>
             <th>Email</th>
             <th>Username</th>
-            <th>AccessFailedCount</th>
-            <th>PhoneNumber</th>
             <th>Delete User</th>
+            <th>PhoneNumber</th>
+            
 
         </tr>
     </thead>
@@ -19,12 +24,12 @@
             <tr>
                 <td>@user.Email</td>
                 <td>@user.UserName</td>
-                <td>@user.AccessFailedCount</td>
-                <td>@user.PhoneNumber</td>
                 <th>
-                    <a role="button" asp-action="Produkt" asp-action="DeleteUser" asp-route-id="@user.Id"></a>
+                    <a role="button" asp-action="Produkt" asp-action="DeleteUser" asp-route-id="@user.Id">Delete</a>
 
                 </th>
+                <td>@user.PhoneNumber</td>
+              
 
             </tr>
         }

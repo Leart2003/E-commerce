@@ -1,4 +1,3 @@
-using DocumentFormat.OpenXml.Office2016.Drawing.ChartDrawing;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Punim_Diplome.Data;
@@ -22,12 +21,14 @@ namespace Punim_Diplome
 
             builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
-            builder.Services.AddControllersWithViews(); // Add this line
+            builder.Services.AddControllersWithViews();
             builder.Services.AddRazorPages();
             builder.Services.AddScoped<IKomentService, KomentService>();
             builder.Services.AddScoped<IProduktService, ProduktService>();
+   
 
 
+            //Injektimi i servisit per admin permision
             builder.Services.AddAuthorization(options =>
             {
                 options.AddPolicy("AdminEmail", policy =>
@@ -38,9 +39,6 @@ namespace Punim_Diplome
                         return emailClaim == authorizedEmail;
                     }));
             });
-             
-
-
 
             var app = builder.Build();
 

@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis.Differencing;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Identity.Client.Extensions.Msal;
 using Punim_Diplome.Data;
 using Punim_Diplome.Models;
 using System;
@@ -11,6 +10,7 @@ using Punim_Diplome.Data.Services;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.IdentityModel.Tokens;
 
 
 
@@ -41,7 +41,7 @@ namespace Punim_Diplome.Controllers
 
 
         // GET: ProduktController
-        [Authorize(Policy = "AdminEmail")]
+      
         public async Task<IActionResult> Index(String searchString, String brand, String selectedCategory)
         {
             
@@ -90,15 +90,20 @@ namespace Punim_Diplome.Controllers
 
         [Authorize(Policy ="AdminEmail")]
 
-        public async Task< IActionResult> Management(int id)
+        public async Task<IActionResult> Menaxhment(String searchBar)
 
         {
-            var produkt = await context.Produktet.FindAsync(id);
-            if (produkt == null)
+            var produktet = await context.Produktet.OrderByDescending(p => p.Id).ToListAsync();
+
+            if (produktet == null)
             {
-                return RedirectToAction("Index", "Produkt");
+                return NotFound();
             }
-            return View(produkt);
+            if (!String.IsNullOrEmpty(searchBar))
+            {
+                produktet = produktet.Where(p => p.Name.ToUpper().Contains(searchBar.ToUpper())).ToList();
+            }
+            return View(produktet);
         }
         
 
@@ -425,9 +430,6 @@ namespace Punim_Diplome.Controllers
         }
 
         
-
-
-
     }
  
     
