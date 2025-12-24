@@ -14,6 +14,8 @@
             <th>Product</th>
             <th>Data e porosisë</th>
             <th>Foto</th>
+            <th>Gjendja e porosisë</th>
+           
         </tr>
     </thead>
     <tbody>
@@ -31,6 +33,25 @@
                 <td>
                     <img src="~/Produktet/@item.Produkt.ImageFileName" width="100" />
                 </td>
+
+                <td>
+    <form asp-action="UpdateStatus" method="post" style="display:flex; gap: 5px;">
+    @Html.AntiForgeryToken()
+    <input type="hidden" name="id" value="@item.Id" />
+                        <select name="status" class="form-control">
+                            <option value="Pending" selected="@(item.OrderStatus == "Pending")">Pending</option>
+                            <option value="Processing" selected="@(item.OrderStatus == "Processing")">Processing</option>
+                            <option value="Shipped" selected="@(item.OrderStatus == "Shipped")">Shipped</option>
+                            <option value="Cancelled" selected="@(item.OrderStatus == "Cancelled")">Cancelled</option>
+                            <option value="Completed" selected="@(item.OrderStatus == "Completed")">Completed</option>
+                        </select>
+
+    <button type="submit" class="btn btn-sm btn-primary">Save</button>
+</form>
+
+
+                </td>
+                    
                 
             </tr>
         

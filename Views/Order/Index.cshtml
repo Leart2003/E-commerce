@@ -1,6 +1,6 @@
 ﻿@model IEnumerable< Punim_Diplome.Models.OrderProduct>
 
-<h2>Your Orders</h2>
+<h2>Porositë e juaja</h2>
 
 
 <table class="table">
@@ -9,25 +9,23 @@
         <tr>
             
             <th>Name</th>
-           
+            <th>Çmimi</th>
             <th>Image</th>
-            <th>Created at</th>
+            <th>Data e porosisë</th>
+            <th>Gjendja e porosis</th>
             
         </tr>
 
     </thead>
     <tbody>
         
-        
-            
-        
+                
             
         
 
         @foreach (var item in Model)
         {
-            @* img src = "Produktet/@Produkt.ImageFileName" *@
-            <tr>
+                         <tr>
                 <td>@item.Produkt.Name</td>
 
 
@@ -40,25 +38,28 @@
                 <td>
                     @item.OrderDate
                 </td>
-
-
-
-                <td style=" white-space:nowrap">
-
-
-                    <a class="btn btn-danger btn-sm" asp-controller="Order" asp-action="CancelOrder" asp-route-id="@item.Id" role="button">
-                        Delete
-                    </a>
-
-                    <a asp-controller="Produkt" asp-action="Details" asp-route-id="@item.Id">
-                        Details
-
-
-                    </a> |
-
-
-
+                <td>
+                    @item.OrderStatus
                 </td>
+
+
+
+                <td style="white-space: nowrap;">
+                    <div class="d-flex flex-wrap gap-2">
+
+                        <form asp-action="CancelOrder" asp-controller="Order" asp-route-id="@item.Id" method="post" class="m-0">
+                            @Html.AntiForgeryToken()
+                            <input type="hidden" name="id" value="@item.Id" />
+                            <button type="submit" class="btn btn-danger btn-sm">Cancel Order</button>
+                        </form>
+
+                        <a asp-controller="Produkt" asp-action="Details" asp-route-id="@item.ProductId" class="btn btn-success btn-sm">
+                            Details
+                        </a>
+
+                    </div>
+                </td>
+
             </tr>
         }
         

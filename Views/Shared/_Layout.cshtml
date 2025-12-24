@@ -1,7 +1,8 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @inject UserManager<IdentityUser> userManager
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-bs-theme="light">
+
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -46,7 +47,7 @@
                         {
 
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Order" asp-action="Index">Porositë e </a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Order" asp-action="Index">Porositë e juaja </a>
                             </li>
                         }  
                         
@@ -60,7 +61,7 @@
 
 
 
-                            <li class="nav-item"><a class="nav-link text-dark " asp-controller="Home" asp-action="Privacy">Dashboard</a></li>
+                            <li class="nav-item"><a class="nav-link text-dark " asp-controller="Home" asp-action="Privacy">Menaxhimi i Stokut</a></li>
                         }
                     </ul>
 
@@ -70,6 +71,53 @@
             </div>
         </nav>
     </header>
+
+    <style>
+        /* Header Styling */
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 1030;
+        }
+
+        .navbar {
+            background-color: #343a40 !important; /* Dark gray background */
+            padding: 0.75rem 1rem;
+        }
+
+        .navbar-brand img {
+            max-height: 50px;
+            border-radius: 50%;
+            transition: transform 0.3s ease;
+        }
+
+            .navbar-brand img:hover {
+                transform: scale(1.05);
+            }
+
+        .navbar-nav .nav-link {
+            color: #f8f9fa !important; /* Light text */
+            font-weight: 500;
+            transition: color 0.2s ease-in-out;
+        }
+
+            .navbar-nav .nav-link:hover {
+                color: #ffc107 !important; /* Bootstrap warning yellow on hover */
+            }
+
+        .navbar-nav .nav-item {
+            margin-left: 1rem;
+        }
+
+        .navbar-toggler {
+            border-color: #f8f9fa;
+        }
+
+        .navbar-toggler-icon {
+            background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba%28255,255,255,1%29' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+        }
+
+    </style>
 
 
     
@@ -83,11 +131,14 @@
     <footer class="py-5 ">
         <hr />
         <div class="container">&copy; 2024 - Punim_Diplome - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a></div>
+      
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
+
+   
 </body>
 </html>
 

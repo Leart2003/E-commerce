@@ -6,27 +6,19 @@
 
 
 
-
-
 <h2 class="text-center" mb-5>Lista e produkteve</h2>
 
-<div class="align-content-center">
-    <div class="col">
+<div class="row justify-content-center">
+    <div class="col-auto">
         <a class="btn btn-primary" asp-controller="Produkt" asp-action="Create">Krijo produkt të ri</a>
     </div>
-
-
-
+    <div class="col-auto">
+        <a asp-controller="Produkt" asp-action="ExportToExcel" class="btn btn-success">Export to Excel</a>
+    </div>
 </div>
-<div class="container d-flex align-items-center justify-content-center">
-    <form asp-controller="Produkt" asp-action="Menaxhment" method="get">
 
-        <input class="form-control me-sm-2" type="search" name="SearchString" placeholder="Kërko" />
-        <center>
-            <button class="btn btn-secondary my-2 my-sm-0" type="submit" value="filter">Search</button>
-        </center>
-    </form>
-</div>
+
+
 
 
 <table class="table">
@@ -39,6 +31,7 @@
             <th>Price</th>
             <th>Image</th>
             <th>operacionet</th>
+           
            
         </tr>
 
@@ -77,7 +70,9 @@
                         Details
 
 
-                    </a> |
+                    </a>
+                    
+           
 
 
 

@@ -1,5 +1,6 @@
 ﻿@model IEnumerable<Microsoft.AspNetCore.Identity.IdentityUser>
 
+
 @{
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
@@ -25,7 +26,8 @@
                 <td>@user.Email</td>
                 <td>@user.UserName</td>
                 <th>
-                    <a role="button" asp-action="Produkt" asp-action="DeleteUser" asp-route-id="@user.Id">Delete</a>
+                    <a role="button" class="btn-danger"  asp-controller="Produkt" asp-action="DeleteUser" asp-route-id="@user.Id">Delete</a>
+                    
 
                 </th>
                 <td>@user.PhoneNumber</td>

@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using OfficeOpenXml;
 using Punim_Diplome.Data;
 using Punim_Diplome.Data.Services;
 using System.Security.Claims;
@@ -13,6 +14,7 @@ namespace Punim_Diplome
             var builder = WebApplication.CreateBuilder(args);
             var authorizedEmail = builder.Configuration["AuthorizedUser:Email"];
 
+            
             // Add services to the container.
             var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
@@ -39,6 +41,8 @@ namespace Punim_Diplome
                         return emailClaim == authorizedEmail;
                     }));
             });
+            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+
 
             var app = builder.Build();
 

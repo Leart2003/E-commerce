@@ -1,0 +1,37 @@
+﻿@model Punim_Diplome.Models.OrderProduct
+
+<h1>Place Order</h1>
+
+<div class="mb-3">
+<h4>@Model.Produkt?.Name</h4>
+    <img src="~/Produktet/@Model.Produkt?.ImageFileName" alt="@Model.Produkt?.Name" width="200" />
+
+</div>
+<form asp-action="OrderForm" method="post">
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(m => m.ProductId)
+    @Html.HiddenFor(m => m.UserId)
+   
+
+
+    <div class="form-group">
+        <label>Delivery Address</label>
+        @Html.TextBoxFor(m => m.DeliveryAddress, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.DeliveryAddress)
+    </div>
+
+    <div class="form-group">
+        <label asp-for="PaymentMethod">Payment Method</label>
+        @Html.DropDownListFor(m => m.PaymentMethod, new SelectList(new[]
+                 {
+        "Credit Card",
+        "PayPal",
+        "Cash on Delivery",
+        "Bank Transfer"
+        }), "Select a method", new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.PaymentMethod)
+    </div>
+
+
+    <button type="submit" class="btn btn-primary" onclick="return confirm('Deshironi të porosisni këtë produkt')">Place Order</button>
+</form>

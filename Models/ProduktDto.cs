@@ -6,7 +6,9 @@
 
     public class ProduktDto
     {
-        // Common for all operations (Read, Update, Delete)
+        // Common for all operations (Read
+        //
+        // Update, Delete)
         public int Id { get; set; } // Required for Update/Delete but ignored for Create
 
        

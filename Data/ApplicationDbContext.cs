@@ -27,12 +27,19 @@ public class ApplicationDbContext : IdentityDbContext<IdentityUser>
               .HasForeignKey(k => k.ProduktId)
               .OnDelete(DeleteBehavior.Cascade);
 
+        //modelBuilder.Entity<Koment>()
+        //    .HasOne(k => k.User)
+        //    .WithMany()
+        //    .HasForeignKey(k => k.IdentityUserId)
+        //    .HasForeignKey(k => k.ProduktId)
+        //    .OnDelete(DeleteBehavior.Cascade);
+
 
         modelBuilder.Entity<OrderProduct>()
-            .HasOne(o  => o.User)
-            .WithMany()
-            .HasForeignKey(o =>o.UserId)
-            .OnDelete(DeleteBehavior.Cascade);
+        .HasOne(o => o.User)
+        .WithMany()
+        .HasForeignKey(o => o.UserId)
+        .OnDelete(DeleteBehavior.Cascade);
 
         modelBuilder.Entity<OrderProduct>()
             .HasOne(o => o.Produkt)

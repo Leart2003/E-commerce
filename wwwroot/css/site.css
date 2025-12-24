@@ -19,6 +19,7 @@ html {
 
 body {
     margin-bottom: 60px;
+   
 }
 
 .product-image {
@@ -39,6 +40,5 @@ body {
         opacity: 1;
     }
 
-header {
-    padding: 10px 0;
-}
+
+
