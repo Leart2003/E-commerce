@@ -1,115 +1,361 @@
-﻿    @using Microsoft.AspNetCore.Identity
+﻿@using Microsoft.AspNetCore.Identity
 @model Punim_Diplome.Models.ProduktDetailsVM
 @inject UserManager<IdentityUser> userManager
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+@{
+    ViewData["Title"] = "Product Details";
+}
 
-<div class="container mt-5">
-    <div class="row">
-        <!-- Product Images -->
-        <div class="col-md-6 mb-4">
-            <img src="~/Produktet/@Model.Produkt?.ImageFileName" alt="@Model.Produkt.Name" class="img-fluid rounded mb-3 product-image" id="mainImage" >
-    </div>
-
-    <!-- Product Details -->
-    <div class="col-md-6">
-        <h2 class="mb-3">@Model.Produkt.Name</h2>
-        <p class="text-muted mb-4">@Model.Produkt.Category</p>
-        <div class="mb-3">
-            <span class="h4 me-2">@Model.Produkt.Price.ToString("C")</span>
-
-        </div>
-        <div class="mb-3">
-
-            <span class="ms-2">4.5 (120 reviews)</span>
-        </div>
-        <p class="mb-4">
-            @Model.Produkt.Description
-        </p>
-        <div class="mb-4">
-
-            <li>Procesori: <strong>@Model.Produkt.Procesor</strong></li>
-        </div>
-        <div class="mb-4">
-            <label>Manufactured data:@Model.Produkt.Date </label>
-        </div>
-
-
-        @* Porosia e produktit *@
-        @if (User.Identity.IsAuthenticated)
-        {
-            <a asp-controller="Order" asp-action="OrderForm" asp-route-productId="@Model.Produkt.Id" class="btn btn-success"><i class="bi bi-heart">OrderNow</i></a>
-           
-
-
-
-        }
-        else 
-        {
-            <p>Login to order</p>
-        }
-
-
-        <div class="mt-4">
-            <h5>Key Features:</h5>
-            <ul>
-                <li>Ram:<strong>@Model.Produkt.Ram</strong></li>
-                <li>Hapsira: <strong>@Model.Produkt.Storage @Model.Produkt.Storagetype</strong></li>
-                <li>Screen inch:<strong>@Model.Produkt.ScreenInch</strong></li>
-
-
-            </ul>
-        </div>
-    </div>
-</div>
-
-
-</div>
-@* 
-Comments region *@
-
-<hr />
-@if (Model.Koments?.Any() == true)
-{
-    <h3>Comments:</h3>
-    <div class="mb-3" style="background-color:white">   
-        <ul >
-            @foreach (var koment in Model.Koments)
-            {
-
-            <li>
-                <strong>@koment.User?.UserName:</strong> @koment.Content
-            </li>
-
-            @if (User.Identity.IsAuthenticated && koment.IdentityUserId == userManager.GetUserId(User))
-            {
-
-
-                <form method="post" asp-controller="Produkt" asp-action="DeleteComment">
-
-                    <input type="hidden" name="commentId" value="@koment.Id" />
-
-                    <button type="submit" class="btn btn-outline-danger">Delete</button>
-
-                </form>
-            
-            }
-       
-        
-     
-        
+<style>
+    .details-hero {
+        background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+        color: white;
+        padding: 2rem 0;
+        margin-bottom: 3rem;
     }
-</ul>
+
+    .breadcrumb {
+        background-color: transparent;
+        padding: 0;
+    }
+
+    .breadcrumb-item.active {
+        color: #f8f9fa;
+    }
+
+    .breadcrumb a {
+        color: #3498db;
+    }
+
+    .product-image-container {
+        background-color: #f8f9fa;
+        border-radius: 10px;
+        padding: 1.5rem;
+        margin-bottom: 2rem;
+    }
+
+    .product-image {
+        max-height: 500px;
+        object-fit: cover;
+        border-radius: 8px;
+        width: 100%;
+    }
+
+    .specs-card {
+        background: white;
+        border-radius: 10px;
+        padding: 2rem;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+        margin-bottom: 2rem;
+    }
+
+    .spec-item {
+        display: flex;
+        justify-content: space-between;
+        padding: 0.75rem 0;
+        border-bottom: 1px solid #e0e0e0;
+    }
+
+    .spec-item:last-child {
+        border-bottom: none;
+    }
+
+    .spec-label {
+        color: #7f8c8d;
+        font-weight: 500;
+    }
+
+    .spec-value {
+        color: #2c3e50;
+        font-weight: 600;
+    }
+
+    .price-section {
+        background: white;
+        border-radius: 10px;
+        padding: 2rem;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+        margin-bottom: 2rem;
+    }
+
+    .price-display {
+        font-size: 2.5rem;
+        color: #e74c3c;
+        font-weight: 700;
+        margin-bottom: 1rem;
+    }
+
+    .rating {
+        color: #f39c12;
+        margin-bottom: 1rem;
+    }
+
+    .description-section {
+        background: white;
+        border-radius: 10px;
+        padding: 2rem;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+        margin-bottom: 2rem;
+        line-height: 1.8;
+    }
+
+    .description-section h5 {
+        color: #2c3e50;
+        font-weight: 600;
+        margin-bottom: 1rem;
+    }
+
+    .features-list {
+        list-style: none;
+        padding: 0;
+    }
+
+    .features-list li {
+        padding: 0.75rem 0;
+        color: #2c3e50;
+        border-bottom: 1px solid #e0e0e0;
+    }
+
+    .features-list li:before {
+        content: "✓ ";
+        color: #27ae60;
+        font-weight: bold;
+        margin-right: 0.5rem;
+    }
+
+    .features-list li:last-child {
+        border-bottom: none;
+    }
+
+    .comments-section {
+        background: white;
+        border-radius: 10px;
+        padding: 2rem;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+        margin-top: 3rem;
+    }
+
+    .comments-section h4 {
+        color: #2c3e50;
+        font-weight: 600;
+        margin-bottom: 2rem;
+        padding-bottom: 1rem;
+        border-bottom: 2px solid #3498db;
+    }
+
+    .comment {
+        background-color: #f8f9fa;
+        border-radius: 8px;
+        padding: 1.5rem;
+        margin-bottom: 1rem;
+        border-left: 4px solid #3498db;
+    }
+
+    .comment-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 0.75rem;
+    }
+
+    .comment-author {
+        color: #2c3e50;
+        font-weight: 600;
+    }
+
+    .comment-content {
+        color: #555;
+        line-height: 1.6;
+    }
+
+    .comment-form {
+        background-color: #f8f9fa;
+        border-radius: 8px;
+        padding: 2rem;
+        margin-top: 2rem;
+    }
+
+    .comment-form textarea {
+        border-radius: 8px;
+        border: 1px solid #e0e0e0;
+    }
+
+    .auth-required-message {
+        background-color: #ecf0f1;
+        border-left: 4px solid #3498db;
+        padding: 1.5rem;
+        border-radius: 8px;
+        color: #2c3e50;
+    }
+
+    .action-buttons {
+        display: flex;
+        gap: 1rem;
+        margin-top: 2rem;
+    }
+
+    .btn-order {
+        flex: 1;
+        padding: 1rem;
+        font-weight: 600;
+        border-radius: 8px;
+    }
+</style>
+
+<!-- Details Hero -->
+<section class="details-hero">
+    <div class="container px-4 px-lg-5">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a asp-controller="Produkt" asp-action="Index">Products</a></li>
+                <li class="breadcrumb-item active" aria-current="page">@Model.Produkt?.Name</li>
+            </ol>
+        </nav>
+    </div>
+</section>
+
+<div class="container px-4 px-lg-5 py-4">
+    <div class="row">
+        <!-- Product Image -->
+        <div class="col-lg-6 mb-4">
+            <div class="product-image-container">
+                <img src="~/Produktet/@Model.Produkt?.ImageFileName" alt="@Model.Produkt?.Name" class="product-image" id="mainImage">
+            </div>
+        </div>
+
+        <!-- Product Details -->
+        <div class="col-lg-6">
+            <!-- Title and Brand -->
+            <div class="specs-card">
+                <p class="text-muted mb-2">@Model.Produkt?.Brand</p>
+                <h1 class="mb-3">@Model.Produkt?.Name</h1>
+                <p class="text-muted mb-0">@Model.Produkt?.Category</p>
+            </div>
+
+            <!-- Price Section -->
+            <div class="price-section">
+                <div class="price-display">@Model.Produkt?.Price.ToString("C")</div>
+                <div class="rating">
+                    <i class="bi bi-star-fill"></i>
+                    <i class="bi bi-star-fill"></i>
+                    <i class="bi bi-star-fill"></i>
+                    <i class="bi bi-star-fill"></i>
+                    <i class="bi bi-star-half"></i>
+                    <span class="ms-2">4.5 (120 reviews)</span>
+                </div>
+            </div>
+
+            <!-- Description -->
+            <div class="description-section">
+                <h5>Product Description</h5>
+                <p>@Model.Produkt?.Description</p>
+            </div>
+
+            <!-- Key Specifications -->
+            <div class="specs-card">
+                <h5 class="mb-3">Key Specifications</h5>
+                <div class="spec-item">
+                    <span class="spec-label"><i class="bi bi-cpu"></i> Processor</span>
+                    <span class="spec-value">@Model.Produkt?.Procesor</span>
+                </div>
+                <div class="spec-item">
+                    <span class="spec-label"><i class="bi bi-memory"></i> RAM</span>
+                    <span class="spec-value">@Model.Produkt?.Ram</span>
+                </div>
+                <div class="spec-item">
+                    <span class="spec-label"><i class="bi bi-hdd"></i> Storage</span>
+                    <span class="spec-value">@Model.Produkt?.Storage @Model.Produkt?.Storagetype</span>
+                </div>
+                <div class="spec-item">
+                    <span class="spec-label"><i class="bi bi-display"></i> Screen Size</span>
+                    <span class="spec-value">@Model.Produkt?.ScreenInch"</span>
+                </div>
+                <div class="spec-item">
+                    <span class="spec-label"><i class="bi bi-calendar-event"></i> Manufactured Date</span>
+                    <span class="spec-value">@Model.Produkt?.Date.ToString("yyyy-MM-dd")</span>
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="action-buttons">
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <a asp-controller="Order" asp-action="OrderForm" asp-route-productId="@Model.Produkt?.Id" class="btn btn-primary btn-order">
+                        <i class="bi bi-cart-plus"></i> Order Now
+                    </a>
+                    <a href="javascript:history.back()" class="btn btn-outline-secondary btn-order">
+                        <i class="bi bi-arrow-left"></i> Back
+                    </a>
+                }
+                else
+                {
+                    <div class="auth-required-message w-100">
+                        <i class="bi bi-info-circle"></i> Please <a asp-area="Identity" asp-page="/Account/Login">login</a> to place an order
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+    <!-- Comments Section -->
+    <div class="comments-section">
+        <h4><i class="bi bi-chat-left-text"></i> Customer Comments</h4>
+
+        @if (Model.Koments?.Any() == true)
+        {
+            <div class="mb-4">
+                @foreach (var koment in Model.Koments)
+                {
+                    <div class="comment">
+                        <div class="comment-header">
+                            <span class="comment-author">
+                                <i class="bi bi-person-circle"></i> @koment.User?.UserName
+                            </span>
+                            @if (User.Identity.IsAuthenticated && koment.IdentityUserId == userManager.GetUserId(User))
+                            {
+                                <form method="post" asp-controller="Produkt" asp-action="DeleteComment" class="m-0" style="display: inline;">
+                                    @Html.AntiForgeryToken()
+                                    <input type="hidden" name="commentId" value="@koment.Id" />
+                                    <button type="submit" class="btn btn-sm btn-outline-danger">
+                                        <i class="bi bi-trash"></i> Delete
+                                    </button>
+                                </form>
+                            }
+                        </div>
+                        <p class="comment-content">@koment.Content</p>
+                    </div>
+                }
+            </div>
+        }
+        else
+        {
+            <div class="auth-required-message">
+                <i class="bi bi-chat-left-dots"></i> No comments yet. Be the first to comment!
+            </div>
+        }
+
+        <!-- Add Comment Form -->
+        <div class="comment-form">
+            <h5 class="mb-3">Leave a Comment</h5>
+            @if (User.Identity.IsAuthenticated)
+            {
+                <form asp-action="AddComment" asp-controller="Produkt" method="post">
+                    <div class="mb-3">
+                        <label for="Content" class="form-label">Your Comment</label>
+                        <textarea id="Content" name="Content" class="form-control" rows="4" placeholder="Share your thoughts about this product..." required></textarea>
+                    </div>
+                    <input type="hidden" name="ProduktId" value="@Model.Produkt?.Id" />
+                    <button type="submit" class="btn btn-primary">
+                        <i class="bi bi-send"></i> Post Comment
+                    </button>
+                </form>
+            }
+            else
+            {
+                <div class="auth-required-message">
+                    <i class="bi bi-lock"></i> Please <a asp-area="Identity" asp-page="/Account/Login">login</a> to add a comment
+                </div>
+            }
+        </div>
+    </div>
 </div>
-
-
-}
-else
-{ <p>No comments yet.</p>
-}
-@if (User.Identity.IsAuthenticated)
-{ <form asp-action="AddComment" asp-controller="Produkt" method="post"> <div class="Form" > <label for="Koment">Comment</label> <textarea id="Koment" name="Content" class="form-control"></textarea> </div> <input type="hidden" name="ProduktId" value="@Model.Produkt.Id" /> <button type="submit" class="btn btn-primary">Add Comment</button> </form>
-}
-else
-{ <p>Login to add a comment</p>
-}

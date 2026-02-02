@@ -81,45 +81,82 @@
             position: sticky;
             top: 0;
             z-index: 1030;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         }
 
         .navbar {
-            background-color: #343a40 !important; /* Dark gray background */
-            padding: 0.75rem 1rem;
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%) !important;
+            padding: 1rem 1rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         }
 
         .navbar-brand img {
             max-height: 50px;
-            border-radius: 50%;
-            transition: transform 0.3s ease;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
         }
 
-            .navbar-brand img:hover {
-                transform: scale(1.05);
-            }
+        .navbar-brand img:hover {
+            transform: scale(1.08);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
 
         .navbar-nav .nav-link {
-            color: #f8f9fa !important; /* Light text */
+            color: #f8f9fa !important;
             font-weight: 500;
-            transition: color 0.2s ease-in-out;
+            transition: all 0.3s ease;
+            margin-left: 0.5rem;
+            margin-right: 0.5rem;
+            border-radius: 6px;
+            padding: 0.6rem 1rem !important;
         }
 
-            .navbar-nav .nav-link:hover {
-                color: #ffc107 !important; /* Bootstrap warning yellow on hover */
-            }
+        .navbar-nav .nav-link:hover {
+            color: #3498db !important;
+            background-color: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
 
         .navbar-nav .nav-item {
-            margin-left: 1rem;
+            margin-left: 0.5rem;
         }
 
         .navbar-toggler {
             border-color: #f8f9fa;
+            padding: 0.5rem 0.75rem;
         }
 
         .navbar-toggler-icon {
-            background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba%28255,255,255,1%29' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+            background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba%28248,249,250,1%29' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
         }
 
+        /* Footer Styling */
+        footer {
+            background-color: #2c3e50;
+            color: #f8f9fa;
+            padding: 2rem 0;
+            margin-top: 3rem;
+        }
+
+        footer a {
+            color: #3498db;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        footer a:hover {
+            color: #2980b9;
+        }
+
+        footer hr {
+            border-color: #34495e;
+        }
+
+        /* Main content area */
+        main {
+            min-height: calc(100vh - 200px);
+        }
     </style>
 
 
@@ -131,10 +168,20 @@
     </div>
 
   
-    <footer class="py-5 ">
-        <hr />
-        <div class="container">&copy; 2024 - Punim_Diplome - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a></div>
-      
+    <footer class="py-5">
+        <div class="container">
+            <hr class="mb-4" />
+            <div class="row">
+                <div class="col-md-6">
+                    <h5 class="fw-bold mb-3">Punim Diplome</h5>
+                    <p class="text-muted">Your trusted laptop marketplace for quality products and services.</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <p class="mb-2">&copy; 2024 - Punim_Diplome</p>
+                    <a asp-area="" asp-controller="Home" asp-action="Privacy" class="text-decoration-none">Privacy Policy</a>
+                </div>
+            </div>
+        </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
